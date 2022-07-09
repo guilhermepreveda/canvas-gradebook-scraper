@@ -1,13 +1,28 @@
 import AppError, { handleError } from "../errors/AppError.js";
 
-import listGradebookService from "../services/gradebook/listGradebook.service.js";
+import listJSONGradebookService from "../services/gradebook/listJSONGradebook.service.js";
+import listCSVGradebookService from "../services/gradebook/listCSVGradebook.service.js";
 
 export default class GradebookController {
-  async list(req, res) {
+  async listCSV(req, res) {
     try {
       const { course_id } = req.params;
 
-      const gradebook = await listGradebookService(course_id);
+      const gradebook = await listCSVGradebookService(course_id);
+
+      return res.status(200).send(gradebook);
+    } catch (error) {
+      if (error instanceof AppError) {
+        handleError(error, res);
+      }
+    }
+  }
+
+  async listJSON(req, res) {
+    try {
+      const { course_id } = req.params;
+
+      const gradebook = await listJSONGradebookService(course_id);
 
       return res.status(200).send(gradebook);
     } catch (error) {

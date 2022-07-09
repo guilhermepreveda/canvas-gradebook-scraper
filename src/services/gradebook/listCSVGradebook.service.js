@@ -1,9 +1,8 @@
 import CanvasApi from "../../api/Canvas.api.js";
 
 import Puppeteer from "../../utils/Puppeteer.js";
-import Formatters from "../../utils/Formatters.js";
 
-export default async function listGradebookService(course_id) {
+export default async function listCSVGradebookService(course_id) {
   // console.log("==== listGradebookService(course_id) ==========");
 
   // console.log("1. Starting browser with Puppeteer.startBrowser()");
@@ -25,9 +24,6 @@ export default async function listGradebookService(course_id) {
   // console.log("5. Closing browser with Puppeteer.closeBrowser(browser)");
   await Puppeteer.closeBrowser(browser);
 
-  // console.log("6. Converting the gradebook csv to array with Formatters.csvToArray(csvResponse)");
-  const gradesArray = Formatters.csvToArray(csvResponse);
-
-  // console.log("7. Returning the gradebook array to the user;
-  return gradesArray;
+  // console.log("6. Returning the gradebook csv to the user;
+  return csvResponse;
 }

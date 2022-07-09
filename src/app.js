@@ -20,6 +20,6 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.use("/gradebook", gradebookRoutes);
+app.use("", gradebookRoutes);
 
 export default app;

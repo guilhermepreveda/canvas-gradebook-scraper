@@ -6,6 +6,7 @@ const gradebookController = new GradebookController();
 
 const gradebookRoutes = Router();
 
-gradebookRoutes.get("/:course_id", gradebookController.list);
+gradebookRoutes.get("/csv/:course_id", gradebookController.listCSV);
+gradebookRoutes.get("/json/:course_id", gradebookController.listJSON);
 
 export default gradebookRoutes;
