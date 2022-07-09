@@ -14,7 +14,10 @@ export default class Puppeteer {
   };
 
   static async startBrowser() {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox"],
+    });
 
     const page = await browser.newPage();
 
