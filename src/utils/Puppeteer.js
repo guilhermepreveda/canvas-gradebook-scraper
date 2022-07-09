@@ -57,9 +57,10 @@ export default class Puppeteer {
 
       // console.log("6. Waiting for Promise");
       await Promise.all([
-        console.log("6.1. Clicking the login button"),
+        // console.log("6.1. Clicking the login button"),
         page.click(Puppeteer.selectors.CTA_SELECTOR),
-        console.log("6.2. Waiting for the page to load"),
+
+        //console.log("6.2. Waiting for the page to load"),
         page.waitForNavigation({ waitUntil: "networkidle2" }),
       ]);
 
