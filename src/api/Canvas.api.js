@@ -31,7 +31,7 @@ export default class CanvasApi {
       });
   }
 
-  static async getGradebook(_normandy_session, user_id, attachment_id) {
+  static async getGradebook(_normandy_session, user_id, attachment_id, signal) {
     // console.log("==== CanvasApi.getGradebook(_normandy_session, user_id, attachment_id) ==========");
 
     // console.log("1. Creating headers, with _normandy_session cookie, for the request");
@@ -68,6 +68,7 @@ export default class CanvasApi {
         `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`, //?download=1&amp
         {
           headers: headers,
+          signal,
         }
       )
         .then((response) => {
