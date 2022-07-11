@@ -46,35 +46,55 @@ export default class CanvasApi {
 
     // console.log("2. Creating new Promise");
     return await new Promise(async (resolve, reject) => {
-      // console.log("3. Setting up a timeout for the request (10sec)");
-      setTimeout(async () => {
-        // console.log("4. GET request (NODE-FETCH) on Canvas url with custom headers");
-        await fetch(
-          `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`,
-          {
-            headers: headers,
+      // console.log("3. Creating the AppError template");
+      const error = new AppError(
+        "Something went wrong when retrieving the gradebook",
+        400
+      );
+
+      // console.log("4. Setting up a timeout before start the request (10sec)");
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+
+      // console.log("5. Setting up a timeout for the request (5sec)");
+      const timer = setTimeout(async () => {
+        reject(error);
+      }, 5000);
+
+      console.log(
+        "6. GET request (NODE-FETCH) on Canvas url with custom headers"
+      );
+
+      await fetch(
+        `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`, //?download=1&amp
+        {
+          headers: headers,
+        }
+      )
+        .then((response) => {
+          // console.log("7. Converting response to text");
+          return response.text();
+        })
+        .then((response) => {
+          // console.log(
+          //   "8. Clearing the time and resolving the Promise with response"
+          // );
+
+          if (response.includes("<!DOCTYPE html>")) {
+            throw Error;
           }
-        )
-          .then((response) => {
-            // console.log("5. Converting response to text");
-            return response.text();
-          })
-          .then((response) => {
-            // console.log("5. Resolving the Promise with response");
 
-            return resolve(response);
-          })
-          .catch((err) => {
-            return reject(() => {
-              // console.log("> An error occurred, Promise rejected");
+          clearTimeout(timer);
 
-              throw new AppError(
-                "Something went wrong with the gradebook retrieving",
-                400
-              );
-            });
+          resolve(response);
+        })
+        .catch((err) => {
+          return reject(() => {
+            // console.log("> An error occurred, timer cleared and promise rejected");
+            clearTimeout(timer);
+
+            reject(error);
           });
-      }, 10000);
+        });
     });
   }
 }
