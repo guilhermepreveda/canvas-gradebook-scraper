@@ -60,9 +60,9 @@ export default class CanvasApi {
         reject(error);
       }, 5000);
 
-      console.log(
-        "6. GET request (NODE-FETCH) on Canvas url with custom headers"
-      );
+      // console.log(
+      //   "6. GET request (NODE-FETCH) on Canvas url with custom headers"
+      // );
 
       await fetch(
         `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`, //?download=1&amp
