@@ -6,6 +6,7 @@
     "express": "^4.18.1",
     "http-delayed-response": "^0.0.4",
     "node-fetch": "^3.2.6",
+    "on-finished": "^2.4.1",
     "puppeteer": "^15.3.2"
   },
   "scripts": {

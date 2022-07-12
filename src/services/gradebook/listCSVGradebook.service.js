@@ -7,8 +7,8 @@ import Requests from "../../utils/Requests.js";
 
 export default async function listCSVGradebookService(course_id, signal) {
   const appErrorData = {
-    message: "Request cancelled by the user",
-    status: 400,
+    message: "Request finished",
+    status: 100,
   };
 
   console.log("==== listGradebookService(course_id) ==========");

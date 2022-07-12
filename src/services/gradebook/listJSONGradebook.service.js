@@ -5,8 +5,8 @@ import Formatters from "../../utils/Formatters.js";
 
 export default async function listJSONGradebookService(course_id, signal) {
   const appErrorData = {
-    message: "Request cancelled by the user",
-    status: 400,
+    message: "Request finished",
+    status: 100,
   };
 
   console.log("==== listGradebookService(course_id) ==========");

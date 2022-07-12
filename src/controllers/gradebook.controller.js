@@ -5,11 +5,13 @@ import listCSVGradebookService from "../services/gradebook/listCSVGradebook.serv
 
 import Requests from "../utils/Requests.js";
 
+import onFinished from "on-finished";
+
 export default class GradebookController {
   async listCSV(req, res) {
     let signal = AbortSignal.timeout(30000);
 
-    req.on("close", function (err) {
+    onFinished(req, function (err, req) {
       Requests.cancelRequest();
     });
 
