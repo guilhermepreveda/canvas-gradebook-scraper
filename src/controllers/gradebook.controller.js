@@ -3,17 +3,17 @@ import AppError, { handleError } from "../errors/AppError.js";
 import listJSONGradebookService from "../services/gradebook/listJSONGradebook.service.js";
 import listCSVGradebookService from "../services/gradebook/listCSVGradebook.service.js";
 
-import Requests from "../utils/Requests.js";
+// import Requests from "../utils/Requests.js";
 
-import onFinished from "on-finished";
+// import onFinished from "on-finished";
 
 export default class GradebookController {
   async listCSV(req, res) {
     let signal = AbortSignal.timeout(30000);
 
-    onFinished(req, function (err, req) {
-      Requests.cancelRequest();
-    });
+    // onFinished(req, function (err, req) {
+    //   Requests.cancelRequest();
+    // });
 
     try {
       const { course_id } = req.params;
@@ -24,6 +24,8 @@ export default class GradebookController {
     } catch (error) {
       if (error instanceof AppError) {
         handleError(error, res);
+      } else {
+        console.error(error);
       }
     }
   }
