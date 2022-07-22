@@ -35,7 +35,6 @@ export default class CanvasApi {
     // console.log("==== CanvasApi.getGradebook(_normandy_session, user_id, attachment_id) ==========");
 
     // console.log("1. Creating headers, with _normandy_session cookie, for the request");
-
     const headers = {
       accept:
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -53,49 +52,45 @@ export default class CanvasApi {
       );
 
       // console.log("4. Setting up a timeout before start the request (10sec)");
-      await new Promise((resolve) => setTimeout(resolve, 10000));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
 
       // console.log("5. Setting up a timeout for the request (5sec)");
       const timer = setTimeout(async () => {
         reject(error);
       }, 5000);
 
-      // console.log(
-      //   "6. GET request (NODE-FETCH) on Canvas url with custom headers"
-      // );
+      try {
+        // console.log(
+        //   "6. GET request (NODE-FETCH) on Canvas url with custom headers"
+        // );
 
-      await fetch(
-        `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`, //?download=1&amp
-        {
-          headers: headers,
-          signal,
-        }
-      )
-        .then((response) => {
-          // console.log("7. Converting response to text");
-          return response.text();
-        })
-        .then((response) => {
-          // console.log(
-          //   "8. Clearing the time and resolving the Promise with response"
-          // );
-
-          if (response.includes("<!DOCTYPE html>")) {
-            throw Error;
+        const response = await fetch(
+          `${canvasUrl}/users/${user_id}/files/${attachment_id}?download=1&amp`, //?download=1&amp
+          {
+            headers: headers,
+            signal,
           }
+        );
 
-          clearTimeout(timer);
+        const responseText = await response.text();
 
-          resolve(response);
-        })
-        .catch((err) => {
-          return reject(() => {
-            // console.log("> An error occurred, timer cleared and promise rejected");
-            clearTimeout(timer);
+        // console.log(
+        //   "8. Clearing the time and resolving the Promise with response"
+        // );
 
-            reject(error);
-          });
-        });
+        if (responseText.includes("<!DOCTYPE html>")) {
+          throw Error;
+        }
+
+        clearTimeout(timer);
+
+        resolve(responseText);
+      } catch (err) {
+        // console.log("> An error occurred, timer cleared and promise rejected");
+        clearTimeout(timer);
+
+        reject(error);
+      }
     });
   }
 }

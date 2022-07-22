@@ -37,7 +37,7 @@ export default async function listCSVGradebookService(course_id, signal) {
   console.log(
     "3. Requesting a csv gradebook generation with Puppeteer.gradebookCSVRequest(page, course_id)"
   );
-  const attachment_id = await Puppeteer.gradebookCSVRequest(page, course_id);
+  const attachment_id = await Puppeteer.gradebookCSVRequest(course_id);
 
   // if (Requests.requestCancelled) {
   //   console.error(appErrorData.message);
